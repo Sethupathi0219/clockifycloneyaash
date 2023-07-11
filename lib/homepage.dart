@@ -44,6 +44,15 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           style: const TextStyle(fontSize: 24),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          setState(() {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Addentry()));
+          });
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (int index) {
@@ -85,6 +94,24 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             label: 'Projects',
           ),
         ],
+      ),
+    );
+  }
+}
+
+class Addentry extends StatefulWidget {
+  const Addentry({super.key});
+
+  @override
+  State<Addentry> createState() => _AddentryState();
+}
+
+class _AddentryState extends State<Addentry> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Add entry'),
       ),
     );
   }
