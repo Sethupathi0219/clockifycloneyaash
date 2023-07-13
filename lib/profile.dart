@@ -70,44 +70,46 @@ class _ListViewScreenState extends State<ListViewScreen> {
               ),
               onTap: () {
                 setState(() {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => settings()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const settings()));
                 });
               },
             ),
           ),
-          Divider(
+          const Divider(
             thickness: 2,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: ListTile(
               leading: Icon(Icons.help_outline_rounded, size: 30.0),
               title: Text('Help', style: TextStyle(fontSize: 20.0)),
             ),
           ),
-          Divider(
+          const Divider(
             thickness: 2,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: ListTile(
               leading: Icon(Icons.headset_mic, size: 30.0),
               title: Text('Support', style: TextStyle(fontSize: 20.0)),
             ),
           ),
-          Divider(
+          const Divider(
             thickness: 2,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListTile(
-              leading: Icon(Icons.logout, size: 30.0),
-              title: Text('Log out', style: TextStyle(fontSize: 20.0)),
+              leading: const Icon(Icons.logout, size: 30.0),
+              title: const Text('Log out', style: TextStyle(fontSize: 20.0)),
               onTap: () {
                 setState(() {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => alert()));
+                      MaterialPageRoute(builder: (context) => const alert()));
                 });
               },
             ),
@@ -129,17 +131,17 @@ class _alertState extends State<alert> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Are you sure'),
+      title: const Text('Are you sure'),
       actions: [
         TextButton(
           onPressed: () {},
-          child: Text('CONFIRM'),
+          child: const Text('CONFIRM'),
         ),
         TextButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text('CANCEL'),
+          child: const Text('CANCEL'),
         ),
       ],
     );

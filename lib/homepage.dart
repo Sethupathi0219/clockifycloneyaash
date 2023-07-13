@@ -1,4 +1,5 @@
 import 'package:clocify_clone/profile.dart';
+import 'package:clocify_clone/time_tracker.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
@@ -49,7 +50,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
         onPressed: () {
           setState(() {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Addentry()));
+                context, MaterialPageRoute(builder: (context) => TimerApp()));
           });
         },
       ),
@@ -94,24 +95,6 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             label: 'Projects',
           ),
         ],
-      ),
-    );
-  }
-}
-
-class Addentry extends StatefulWidget {
-  const Addentry({super.key});
-
-  @override
-  State<Addentry> createState() => _AddentryState();
-}
-
-class _AddentryState extends State<Addentry> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add entry'),
       ),
     );
   }
