@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:clocify_clone/project.dart';
+import 'package:clocify_clone/task.dart';
 import 'package:flutter/material.dart';
 
 class TimerApp extends StatefulWidget {
@@ -89,21 +90,21 @@ class _TimerAppState extends State<TimerApp> {
                       children: [
                         ElevatedButton(
                           onPressed: startTimer,
-                          child: Text('Start'),
+                          child: const Text('Start'),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5.0,
                         ),
                         ElevatedButton(
                           onPressed: stopTimer,
-                          child: Text('Stop'),
+                          child: const Text('Stop'),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5.0,
                         ),
                         ElevatedButton(
                           onPressed: resetTimer,
-                          child: Text('Reset'),
+                          child: const Text('Reset'),
                         ),
                       ],
                     )),
@@ -116,7 +117,7 @@ class _TimerAppState extends State<TimerApp> {
           ),
           Row(
             children: [
-              Expanded(
+              const Expanded(
                 flex: 1,
                 child: Icon(Icons.feed_sharp),
               ),
@@ -126,34 +127,45 @@ class _TimerAppState extends State<TimerApp> {
               Expanded(
                 flex: 5,
                 child: TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'What are you working on?',
                   ),
                 ),
               ),
             ],
           ),
-          Divider(
-            thickness: 1.0,
-            color: Colors.black45,
+          ListTile(
+            leading: const Icon(Icons.folder, size: 25.0),
+            title: const Text('Project', style: TextStyle(fontSize: 20.0)),
+            // subtitle: ,
+            onTap: () {
+              setState(() {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Project()));
+              });
+            },
           ),
-          Padding(
-            padding: EdgeInsets.all(.0),
-            child: ListTile(
-              leading: Icon(Icons.folder, size: 25.0),
-              title: Text('Projecct', style: TextStyle(fontSize: 20.0)),
-              // subtitle: ,
-              onTap: () {
-                setState(() {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Project()));
-                });
-              },
+          const Padding(
+            padding: EdgeInsets.only(left: 70),
+            child: Divider(
+              thickness: 1.0,
+              color: Colors.black45,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 70),
-            child: const Divider(
+          ListTile(
+            leading: const Icon(Icons.folder, size: 25.0),
+            title: const Text('Task', style: TextStyle(fontSize: 20.0)),
+            // subtitle: ,
+            onTap: () {
+              setState(() {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => task()));
+              });
+            },
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 70),
+            child: Divider(
               thickness: 1.0,
               color: Colors.black45,
             ),
