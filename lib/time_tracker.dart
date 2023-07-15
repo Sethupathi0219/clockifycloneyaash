@@ -14,6 +14,8 @@ class _TimerAppState extends State<TimerApp> {
   int _minutes = 0;
   int _hours = 0;
 
+  Project? selectedProject;
+
   void startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
@@ -137,11 +139,18 @@ class _TimerAppState extends State<TimerApp> {
           ListTile(
             leading: const Icon(Icons.folder, size: 25.0),
             title: const Text('Project', style: TextStyle(fontSize: 20.0)),
-            // subtitle: ,
+            subtitle: Text(selectedProject?.name ?? "",
+                style:
+                    TextStyle(color: selectedProject?.color ?? Colors.black)),
             onTap: () {
               setState(() {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Project()));
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProjectScreen()))
+                    .then((value) => setState(() {
+                          selectedProject = value;
+                        }));
               });
             },
           ),
