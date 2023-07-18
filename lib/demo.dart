@@ -1,100 +1,104 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MaterialApp(home: Mypass()));
-
-class Mypass extends StatefulWidget {
-  const Mypass({super.key});
-
+class TimerScreen extends StatefulWidget {
   @override
-  State<Mypass> createState() => _MypassState();
+  _TimerScreenState createState() => _TimerScreenState();
 }
 
-class _MypassState extends State<Mypass> {
-  bool _obscureText = true;
-  bool _Theme = false;
-  bool button = false;
+class _TimerScreenState extends State<TimerScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  bool _isPlaying = false;
+  late Timer _timer;
+  int _seconds = 0;
+  int _minutes = 0;
+  int _hours = 0;
 
-  IconData light = Icons.sunny;
-  IconData dark = Icons.nights_stay;
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    );
+  }
 
-  ThemeData lighttheme = ThemeData(
-    brightness: Brightness.light,
-    primarySwatch: Colors.yellow,
-  );
-  ThemeData darktheme = ThemeData(
-    brightness: Brightness.dark,
-    primarySwatch: Colors.red,
-  );
+  @override
+  void dispose() {
+    _animationController.dispose();
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _toggleAnimation() {
+    if (_isPlaying) {
+      _animationController.reverse();
+      _stopTimer();
+    } else {
+      _animationController.forward();
+      _startTimer();
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (_) {
+      setState(() {
+        _seconds++;
+        if (_seconds >= 60) {
+          _seconds = 0;
+          _minutes++;
+          if (_minutes >= 60) {
+            _minutes = 0;
+            _hours++;
+          }
+        }
+      });
+    });
+  }
+
+  void _stopTimer() {
+    _timer?.cancel();
+    _seconds = 0;
+    _minutes = 0;
+    _hours = 0;
+  }
+
+  String _formatTime() {
+    String hoursStr = _hours.toString().padLeft(2, '0');
+    String minutesStr = _minutes.toString().padLeft(2, '0');
+    String secondsStr = _seconds.toString().padLeft(2, '0');
+    return '$hoursStr:$minutesStr:$secondsStr';
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: _Theme ? darktheme : lighttheme,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Password'),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    _Theme = !_Theme;
-                  });
-                },
-                icon: Icon(_Theme ? dark : light))
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Timer'),
+      ),
+      body: Center(
+        child: Text(
+          _isPlaying ? _formatTime() : '0:00:00',
+          style: TextStyle(fontSize: 24.0),
         ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                obscureText: _obscureText,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _obscureText = !_obscureText;
-                      });
-                    },
-                    child: Icon(
-                        _obscureText ? Icons.visibility_off : Icons.visibility),
-                  ),
-                  hintText: 'password',
-                  labelText: 'password',
-                ),
-              ),
-            ),
-            TextButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Second()));
-                },
-                child: Text('next')),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              button = !button;
-            });
-          },
-          child: Icon(button ? Icons.square : Icons.play_arrow),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _toggleAnimation,
+        child: AnimatedIcon(
+          icon: AnimatedIcons.play_pause,
+          progress: _animationController,
         ),
       ),
     );
   }
 }
 
-class Second extends StatefulWidget {
-  const Second({super.key});
-
-  @override
-  State<Second> createState() => _SecondState();
-}
-
-class _SecondState extends State<Second> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
+void main() {
+  runApp(MaterialApp(
+    home: TimerScreen(),
+  ));
 }

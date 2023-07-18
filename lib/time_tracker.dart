@@ -15,7 +15,7 @@ class _TimerScreenState extends State<TimerScreen> {
   int _minutes = 0;
   int _hours = 0;
   bool button = false;
-  void sethu() {
+  void startTimer() {
     if (button) {
       _timer = Timer.periodic(Duration(seconds: 1), (timer) {
         setState(() {
@@ -58,9 +58,9 @@ class _TimerScreenState extends State<TimerScreen> {
   // });
   // }
 
-  // void stopTimer() {
-  //   _timer.cancel();
-  // }
+  void stopTimer() {
+    _timer.cancel();
+  }
 
   String formatTime(int time) {
     return time.toString().padLeft(2, '0');
@@ -209,7 +209,7 @@ class _TimerScreenState extends State<TimerScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: sethu,
+        onPressed: startTimer,
         child: Icon(button ? Icons.square_rounded : Icons.play_arrow),
       ),
     );
