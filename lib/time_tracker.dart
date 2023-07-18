@@ -153,9 +153,11 @@ class _TimerScreenState extends State<TimerScreen> {
           ListTile(
             leading: const Icon(Icons.folder, size: 25.0),
             title: const Text('Project', style: TextStyle(fontSize: 20.0)),
-            subtitle: Text(selectedProject?.name ?? "",
-                style:
-                    TextStyle(color: selectedProject?.color ?? Colors.black)),
+            subtitle: Text(
+              selectedProject?.name ?? "",
+              // style:
+              //     TextStyle(color: selectedProject?.color ?? Colors.black)
+            ),
             onTap: () {
               setState(() {
                 Navigator.push(
