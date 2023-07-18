@@ -1,40 +1,66 @@
 import 'dart:async';
 import 'package:clocify_clone/project.dart';
+import 'package:clocify_clone/tags.dart';
 import 'package:clocify_clone/task.dart';
 import 'package:flutter/material.dart';
 
-class TimerApp extends StatefulWidget {
+class TimerScreen extends StatefulWidget {
   @override
-  _TimerAppState createState() => _TimerAppState();
+  _TimerScreenState createState() => _TimerScreenState();
 }
 
-class _TimerAppState extends State<TimerApp> {
+class _TimerScreenState extends State<TimerScreen> {
   late Timer _timer;
   int _seconds = 0;
   int _minutes = 0;
   int _hours = 0;
-
-  Project? selectedProject;
-
-  void startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        _seconds++;
-        if (_seconds >= 60) {
-          _seconds = 0;
-          _minutes++;
-          if (_minutes >= 60) {
-            _minutes = 0;
-            _hours++;
+  bool button = false;
+  void sethu() {
+    if (button) {
+      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+        setState(() {
+          _seconds++;
+          if (_seconds >= 60) {
+            _seconds = 0;
+            _minutes++;
+            if (_minutes >= 60) {
+              _minutes = 0;
+              _hours++;
+            }
           }
-        }
+        });
       });
+    } else {
+      _timer.cancel();
+    }
+    setState(() {
+      button = !button;
     });
   }
 
-  void stopTimer() {
-    _timer.cancel();
-  }
+  Project? selectedProject;
+  Task? selectedTask;
+  Tags? selectedTags;
+
+  // void startTimer() {
+  // _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+  //   setState(() {
+  //     _seconds++;
+  //     if (_seconds >= 60) {
+  //       _seconds = 0;
+  //       _minutes++;
+  //       if (_minutes >= 60) {
+  //         _minutes = 0;
+  //         _hours++;
+  //       }
+  //     }
+  //   });
+  // });
+  // }
+
+  // void stopTimer() {
+  //   _timer.cancel();
+  // }
 
   String formatTime(int time) {
     return time.toString().padLeft(2, '0');
@@ -78,26 +104,26 @@ class _TimerAppState extends State<TimerApp> {
                         fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Expanded(
-                    flex: 2,
-                    child: Column(
-                      children: [
-                        ElevatedButton(
-                          onPressed: startTimer,
-                          child: const Text('Start'),
-                        ),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        ElevatedButton(
-                          onPressed: stopTimer,
-                          child: const Text('Stop'),
-                        ),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                      ],
-                    )),
+                // Expanded(
+                //     flex: 2,
+                //     child: Column(
+                //       children: [
+                //         ElevatedButton(
+                //           onPressed: startTimer,
+                //           child: const Text('Start'),
+                //         ),
+                //         const SizedBox(
+                //           height: 5.0,
+                //         ),
+                //         ElevatedButton(
+                //           onPressed: stopTimer,
+                //           child: const Text('Stop'),
+                //         ),
+                //         const SizedBox(
+                //           height: 5.0,
+                //         ),
+                //       ],
+                //     )),
               ],
             ),
           ),
@@ -150,13 +176,16 @@ class _TimerAppState extends State<TimerApp> {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.folder, size: 25.0),
+            leading: const Icon(Icons.assignment, size: 25.0),
             title: const Text('Task', style: TextStyle(fontSize: 20.0)),
-            // subtitle: ,
+            subtitle: Text(selectedTask?.name ?? ""),
             onTap: () {
               setState(() {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => task()));
+                Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TaskScreen()))
+                    .then((value) => setState(() {
+                          selectedTask = value;
+                        }));
               });
             },
           ),
@@ -167,8 +196,37 @@ class _TimerAppState extends State<TimerApp> {
               color: Colors.black45,
             ),
           ),
+          MybuildListTile('Tags'),
+          const Padding(
+            padding: EdgeInsets.only(left: 70),
+            child: Divider(
+              thickness: 1.0,
+              color: Colors.black45,
+            ),
+          ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: sethu,
+        child: Icon(button ? Icons.square_rounded : Icons.play_arrow),
+      ),
+    );
+  }
+
+  Widget MybuildListTile(String name) {
+    return ListTile(
+      leading: const Icon(Icons.local_offer, size: 25.0),
+      title: Text(name, style: TextStyle(fontSize: 20.0)),
+      subtitle: Text(selectedTags?.name ?? ""),
+      onTap: () {
+        setState(() {
+          Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => TagsScreen()))
+              .then((value) => setState(() {
+                    selectedTags = value;
+                  }));
+        });
+      },
     );
   }
 }

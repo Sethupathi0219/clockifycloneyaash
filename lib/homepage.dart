@@ -49,8 +49,8 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
         child: const Icon(Icons.add),
         onPressed: () {
           setState(() {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => TimerApp()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TimerScreen()));
           });
         },
       ),
