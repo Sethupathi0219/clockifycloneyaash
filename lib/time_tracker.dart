@@ -14,9 +14,9 @@ class _TimerScreenState extends State<TimerScreen> {
   int _seconds = 0;
   int _minutes = 0;
   int _hours = 0;
-  bool button = false;
+  bool isTimerOn = false;
   void startTimer() {
-    if (button) {
+    if (isTimerOn == false) {
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         setState(() {
           _seconds++;
@@ -34,7 +34,7 @@ class _TimerScreenState extends State<TimerScreen> {
       _timer.cancel();
     }
     setState(() {
-      button = !button;
+      isTimerOn = !isTimerOn;
     });
   }
 
@@ -210,7 +210,7 @@ class _TimerScreenState extends State<TimerScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: startTimer,
-        child: Icon(button ? Icons.square_rounded : Icons.play_arrow),
+        child: Icon(isTimerOn ? Icons.square_rounded : Icons.play_arrow),
       ),
     );
   }
