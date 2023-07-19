@@ -66,7 +66,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             backgroundColor: Colors.blue[300],
             icon: const Icon(
               Icons.access_time,
-              color: Colors.black,
+              color: Colors.white,
             ),
             label: 'Time tracker',
           ),
@@ -74,7 +74,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             backgroundColor: Colors.blue[300],
             icon: const Icon(
               Icons.calendar_month,
-              color: Colors.black,
+              color: Colors.white,
             ),
             label: 'Calender',
           ),
@@ -82,7 +82,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             backgroundColor: Colors.blue[300],
             icon: const Icon(
               Icons.bar_chart,
-              color: Colors.black,
+              color: Colors.white,
             ),
             label: 'Reports',
           ),
@@ -90,7 +90,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             backgroundColor: Colors.blue[300],
             icon: const Icon(
               Icons.folder,
-              color: Colors.black,
+              color: Colors.white,
             ),
             label: 'Projects',
           ),

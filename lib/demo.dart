@@ -1,104 +1,85 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 
-class TimerScreen extends StatefulWidget {
-  @override
-  _TimerScreenState createState() => _TimerScreenState();
+import 'dart:async';
+
+void main() {
+  runApp(MyApp());
 }
 
-class _TimerScreenState extends State<TimerScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  bool _isPlaying = false;
-  late Timer _timer;
-  int _seconds = 0;
-  int _minutes = 0;
-  int _hours = 0;
-
+class MyApp extends StatelessWidget {
   @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 500),
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: HomePage(),
     );
   }
+}
 
+class HomePage extends StatefulWidget {
   @override
-  void dispose() {
-    _animationController.dispose();
-    _timer?.cancel();
-    super.dispose();
-  }
+  _HomePageState createState() => _HomePageState();
+}
 
-  void _toggleAnimation() {
-    if (_isPlaying) {
-      _animationController.reverse();
-      _stopTimer();
-    } else {
-      _animationController.forward();
-      _startTimer();
-    }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
-  }
+class _HomePageState extends State<HomePage> {
+  late Timer _timer;
+  int _seconds = 0;
+  bool _isTimerRunning = false;
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (_) {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         _seconds++;
-        if (_seconds >= 60) {
-          _seconds = 0;
-          _minutes++;
-          if (_minutes >= 60) {
-            _minutes = 0;
-            _hours++;
-          }
-        }
       });
     });
   }
 
   void _stopTimer() {
-    _timer?.cancel();
-    _seconds = 0;
-    _minutes = 0;
-    _hours = 0;
+    _timer.cancel();
   }
 
-  String _formatTime() {
-    String hoursStr = _hours.toString().padLeft(2, '0');
-    String minutesStr = _minutes.toString().padLeft(2, '0');
-    String secondsStr = _seconds.toString().padLeft(2, '0');
-    return '$hoursStr:$minutesStr:$secondsStr';
+  void _toggleTimer() {
+    if (_isTimerRunning) {
+      _stopTimer();
+    } else {
+      _startTimer();
+    }
+    setState(() {
+      _isTimerRunning = !_isTimerRunning;
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Timer'),
+        title: Text('Timer App'),
       ),
       body: Center(
-        child: Text(
-          _isPlaying ? _formatTime() : '0:00:00',
-          style: TextStyle(fontSize: 24.0),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _toggleAnimation,
-        child: AnimatedIcon(
-          icon: AnimatedIcons.play_pause,
-          progress: _animationController,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Timer: $_seconds seconds',
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                _toggleTimer();
+              },
+              child: _isTimerRunning
+                  ? Icon(Icons.pause, color: Colors.white)
+                  : Icon(Icons.play_arrow, color: Colors.white),
+            ),
+          ],
         ),
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: TimerScreen(),
-  ));
 }
