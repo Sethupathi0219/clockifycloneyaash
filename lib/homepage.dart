@@ -2,6 +2,11 @@ import 'package:clocify_clone/profile.dart';
 import 'package:clocify_clone/time_tracker.dart';
 import 'package:flutter/material.dart';
 
+import 'Screen/Calender.dart';
+import 'Screen/Projects.dart';
+import 'Screen/Report.dart';
+import 'Screen/Timetracker.dart';
+
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({super.key});
 
@@ -11,6 +16,12 @@ class BottomNavBarScreen extends StatefulWidget {
 
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _currentIndex = 0;
+  List<Widget> screen = [
+    TimeScreen(),
+    CalenderScreen(),
+    ReportScreen(),
+    MyprojectScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +50,9 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
         ],
         backgroundColor: Colors.blue[300],
       ),
-      body: Center(
-        child: Text(
-          'Page ${_currentIndex + 1}',
-          style: const TextStyle(fontSize: 24),
-        ),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: screen,
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
