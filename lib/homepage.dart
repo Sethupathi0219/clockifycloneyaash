@@ -1,11 +1,12 @@
-import 'package:clocify_clone/profile.dart';
-import 'package:clocify_clone/time_tracker.dart';
+import 'package:clocify_clone/Profile_info/profile.dart';
+
 import 'package:flutter/material.dart';
 
 import 'Screen/Calender.dart';
 import 'Screen/Projects.dart';
 import 'Screen/Report.dart';
 import 'Screen/Timetracker.dart';
+import 'Clone/timer.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({super.key});

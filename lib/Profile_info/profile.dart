@@ -1,4 +1,4 @@
-import 'package:clocify_clone/settings.dart';
+import 'package:clocify_clone/Profile_info/settings.dart';
 import 'package:flutter/material.dart';
 
 class ListViewScreen extends StatefulWidget {

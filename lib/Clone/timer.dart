@@ -1,8 +1,10 @@
 import 'dart:async';
-import 'package:clocify_clone/project.dart';
-import 'package:clocify_clone/tags.dart';
-import 'package:clocify_clone/task.dart';
+
 import 'package:flutter/material.dart';
+
+import 'project.dart';
+import 'tags.dart';
+import 'task.dart';
 
 class TimerScreen extends StatefulWidget {
   @override
@@ -42,22 +44,6 @@ class _TimerScreenState extends State<TimerScreen> {
   Task? selectedTask;
   Tags? selectedTags;
 
-  // void startTimer() {
-  // _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-  //   setState(() {
-  //     _seconds++;
-  //     if (_seconds >= 60) {
-  //       _seconds = 0;
-  //       _minutes++;
-  //       if (_minutes >= 60) {
-  //         _minutes = 0;
-  //         _hours++;
-  //       }
-  //     }
-  //   });
-  // });
-  // }
-
   void stopTimer() {
     _timer.cancel();
   }
@@ -81,14 +67,9 @@ class _TimerScreenState extends State<TimerScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              Text(
-                'Duration',
-                style: TextStyle(fontSize: 22),
-              ),
-            ],
+          Text(
+            'Duration',
+            style: TextStyle(fontSize: 22),
           ),
           Center(
             child: Row(
@@ -104,26 +85,14 @@ class _TimerScreenState extends State<TimerScreen> {
                         fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                 ),
-                // Expanded(
-                //     flex: 2,
-                //     child: Column(
-                //       children: [
-                //         ElevatedButton(
-                //           onPressed: startTimer,
-                //           child: const Text('Start'),
-                //         ),
-                //         const SizedBox(
-                //           height: 5.0,
-                //         ),
-                //         ElevatedButton(
-                //           onPressed: stopTimer,
-                //           child: const Text('Stop'),
-                //         ),
-                //         const SizedBox(
-                //           height: 5.0,
-                //         ),
-                //       ],
-                //     )),
+                Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: ElevatedButton(
+                    onPressed: startTimer,
+                    child: Icon(
+                        isTimerOn ? Icons.square_rounded : Icons.play_arrow),
+                  ),
+                ),
               ],
             ),
           ),
@@ -137,9 +106,6 @@ class _TimerScreenState extends State<TimerScreen> {
                 flex: 1,
                 child: Icon(Icons.feed_outlined),
               ),
-              // SizedBox(
-              //   width: 20,
-              // ),
               Expanded(
                 flex: 5,
                 child: TextFormField(
@@ -198,7 +164,20 @@ class _TimerScreenState extends State<TimerScreen> {
               color: Colors.black45,
             ),
           ),
-          MybuildListTile('Tags'),
+          ListTile(
+            leading: const Icon(Icons.local_offer, size: 25.0),
+            title: Text('tags', style: TextStyle(fontSize: 20.0)),
+            subtitle: Text(selectedTags?.name ?? ""),
+            onTap: () {
+              setState(() {
+                Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TagsScreen()))
+                    .then((value) => setState(() {
+                          selectedTags = value;
+                        }));
+              });
+            },
+          ),
           const Padding(
             padding: EdgeInsets.only(left: 70),
             child: Divider(
@@ -208,27 +187,6 @@ class _TimerScreenState extends State<TimerScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: startTimer,
-        child: Icon(isTimerOn ? Icons.square_rounded : Icons.play_arrow),
-      ),
-    );
-  }
-
-  Widget MybuildListTile(String name) {
-    return ListTile(
-      leading: const Icon(Icons.local_offer, size: 25.0),
-      title: Text(name, style: TextStyle(fontSize: 20.0)),
-      subtitle: Text(selectedTags?.name ?? ""),
-      onTap: () {
-        setState(() {
-          Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => TagsScreen()))
-              .then((value) => setState(() {
-                    selectedTags = value;
-                  }));
-        });
-      },
     );
   }
 }
