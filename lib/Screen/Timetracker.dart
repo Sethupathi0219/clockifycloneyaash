@@ -82,7 +82,8 @@ class _TimeScreenState extends State<TimeScreen> {
           ),
         ),
         const Divider(
-          thickness: 2.0,
+          thickness: 1.0,
+          color: Colors.black45,
         )
       ],
     ));
