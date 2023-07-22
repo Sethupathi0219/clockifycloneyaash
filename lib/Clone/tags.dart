@@ -19,7 +19,7 @@ class _TagsScreenState extends State<TagsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Projects'),
+          title: const Text('Tags'),
         ),
         body: ListView.builder(
             itemCount: Tag.length,

@@ -22,7 +22,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Tasks'),
+          title: Text('Projects'),
         ),
         body: ListView.builder(
             itemCount: Projects.length,

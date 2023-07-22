@@ -166,7 +166,7 @@ class _TimerScreenState extends State<TimerScreen> {
           ),
           ListTile(
             leading: const Icon(Icons.local_offer, size: 25.0),
-            title: Text('tags', style: TextStyle(fontSize: 20.0)),
+            title: Text('Tags', style: TextStyle(fontSize: 20.0)),
             subtitle: Text(selectedTags?.name ?? ""),
             onTap: () {
               setState(() {
